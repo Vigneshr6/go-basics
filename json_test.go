@@ -3,15 +3,16 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
+	"testing"
 	"time"
 )
 
 var jsonData []byte
 
 func init() {
-	data, err := ioutil.ReadFile("./article.json")
+	data, err := os.ReadFile("./resources/article.json")
 	if err != nil {
 		panic("error reading file")
 	}
@@ -66,7 +67,7 @@ func (t *MyTime) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-func main() {
+func TestJson(t *testing.T) {
 	var a articleData
 	if err := json.Unmarshal(jsonData, &a); err != nil {
 		panic(err)

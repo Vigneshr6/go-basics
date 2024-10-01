@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"testing"
 	"time"
 )
 
@@ -11,9 +12,8 @@ var client *http.Client
 
 func init() {
 	log.Println("init client")
-	client = &http.Client{
-		Timeout: time.Second * 30,
-	}
+	client = http.DefaultClient
+	client.Timeout = time.Second * 30
 }
 
 type Post struct {
@@ -23,7 +23,7 @@ type Post struct {
 	Body   string `json:"body"`
 }
 
-func main() {
+func TestHttpClient(t *testing.T) {
 	resp, err := client.Get("https://jsonplaceholder.typicode.com/posts")
 	if err != nil {
 		log.Fatalf("error getting json : %v", err)
